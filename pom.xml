@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>au.edu.usq.adfi.geonames</groupId>
+    <artifactId>geonames</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <description>
+      The project is a proof-of-concept attempt to index all of the geonames
+      data used in our other projects in its own embedded Solr index and bundle
+      as a WAR for distribution and deployment.
+    </description>
+    <name>ADFI - Geonames Index</name>
+    <url>http://fascinator.usq.edu.au/todo</url>
+    <ciManagement>
+        <system>Hudson</system>
+        <url>https://build.adfi.usq.edu.au/ci/job/todo/</url>
+    </ciManagement>
+    <scm>
+        <url>http://fascinator.usq.edu.au/svn/todo</url>
+        <connection>scm:svn:http://fascinator.usq.edu.au/svn/todo</connection>
+        <developerConnection>scm:svn:https://fascinator.usq.edu.au/svn-auth/todo</developerConnection>
+    </scm>
+    <modules>
+        <module>harvester</module>
+        <module>server</module>
+    </modules>
+</project>
