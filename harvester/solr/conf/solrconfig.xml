@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <config>
   <abortOnConfigurationError>true</abortOnConfigurationError>
-  <dataDir>${solr.solr.home:./solr}/data</dataDir>
+  <dataDir>${geonames.solr.home:./solr}/data</dataDir>
 
   <indexDefaults>
     <useCompoundFile>false</useCompoundFile>

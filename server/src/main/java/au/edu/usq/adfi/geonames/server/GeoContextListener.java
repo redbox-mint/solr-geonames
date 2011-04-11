@@ -55,9 +55,9 @@ public class GeoContextListener implements ServletContextListener {
         log.info("\n=============\nStarting Solr:\n");
 
         // Find the Solr home
-        String solrHome = System.getProperty("solr.solr.home");
+        String solrHome = System.getProperty("geonames.solr.home");
         if (solrHome == null) {
-            log.error("No 'solr.solr.home' provided!");
+            log.error("No 'geonames.solr.home' provided!");
             return;
         }
         // Validate on a basic level

@@ -103,9 +103,10 @@ public class Harvester {
     /**
      * Basic constructor. Instantiate our reader and Solr.
      *
+     * @param sourceFile: The input file to read
      * @throws Exception if any errors occur
      */
-    public Harvester(File sourceFile, File solrDir) throws Exception {
+    public Harvester(File sourceFile) throws Exception {
         // Variables
         InputStream inStream = null;
         Reader fileReader = null;
@@ -141,7 +142,12 @@ public class Harvester {
         }
         solrLogger.setLevel(Level.SEVERE);
         // Time to bring Solr online
-        solrServer = startSolr(solrDir.getAbsolutePath());
+        // Find the Solr home
+        String solrHome = System.getProperty("geonames.solr.home");
+        if (solrHome == null) {
+            throw new Exception("No 'geonames.solr.home' provided!");
+        }
+        solrServer = startSolr(solrHome);
     }
 
     /**
@@ -386,36 +392,22 @@ public class Harvester {
      */
     public static void main(String[] args) {
         // Make we were given an appropriate parameter
-        if (args.length < 3) {
-            log.error("ERROR: Usage requires three parameters:\n" +
-                    " 1) The root data directory.\n" +
-                    " 2) The input data file.\n" +
-                    " 3) The output solr directory and config.\n");
+        if (args.length < 1) {
+            log.error("ERROR: Usage requires input file!");
             return;
         }
 
         // Validate it
         File file = new File(args[0]);
-        if (file == null || !file.exists() || !file.isDirectory()) {
-            log.error("ERROR: The data directory path does not exist," +
-                    " or is not a directory");
-            return;
-        }
-        File input = new File(file, args[1]);
-        if (input == null || !input.exists() || !input.isFile()) {
-            log.error("ERROR: The input file does not exist");
-            return;
-        }
-        File solrData = new File(file, args[2]);
-        if (solrData == null || !solrData.exists() || !solrData.isDirectory()) {
-            log.error("ERROR: The solr directory does not exist");
+        if (file == null || !file.exists()) {
+            log.error("ERROR: The input file does not exist!");
             return;
         }
 
         // Get ready to harvest
         Harvester harvester = null;
         try {
-            harvester = new Harvester(input, solrData);
+            harvester = new Harvester(file);
         } catch (Exception ex) {
             // A reason for death was logged in the constructor
             log.error("Stack trace: ", ex);
