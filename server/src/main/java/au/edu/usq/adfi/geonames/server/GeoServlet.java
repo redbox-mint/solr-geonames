@@ -171,7 +171,7 @@ public class GeoServlet extends HttpServlet {
 
         // Or build our query
         if (query == null) {
-            query = buildWeightedQuery(q);
+            query = buildWeightedQuery(q.toLowerCase());
         }
 
         // Start index
@@ -242,11 +242,11 @@ public class GeoServlet extends HttpServlet {
     private String buildWeightedQuery(String q) {
         String rev = new StringBuffer(q).reverse().toString();
         // Perfect matches win
-        String both = "(basic_name_str:"+q+"* AND basic_name_rev:"+rev+"*)";
+        String both = "(basic_name_str:("+q+"*) AND basic_name_rev:("+rev+"*))";
         // Then left-anchored matches
-        String left = "(basic_name_str:"+q+"*)";
+        String left = "(basic_name_str:("+q+"*))";
         // Then anything else
-        String name = "(basic_name:"+q+"* OR basic_name:"+q+")";
+        String name = "(basic_name:("+q+"*) OR basic_name:("+q+"))";
         // Now some hardcoded boosting as we put it together
         String boost = "boost:boost^10";
         return "("+both+"^10 OR "+left+"^4 OR "+name+")^0.2"+" AND "+boost;
