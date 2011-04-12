@@ -11,16 +11,7 @@
       as a WAR for distribution and deployment.
     </description>
     <name>ADFI - Geonames Index</name>
-    <url>http://fascinator.usq.edu.au/todo</url>
-    <ciManagement>
-        <system>Hudson</system>
-        <url>https://build.adfi.usq.edu.au/ci/job/todo/</url>
-    </ciManagement>
-    <scm>
-        <url>http://fascinator.usq.edu.au/svn/todo</url>
-        <connection>scm:svn:http://fascinator.usq.edu.au/svn/todo</connection>
-        <developerConnection>scm:svn:https://fascinator.usq.edu.au/svn-auth/todo</developerConnection>
-    </scm>
+    <url>http://code.google.com/p/solr-geonames/</url>
     <modules>
         <module>harvester</module>
         <module>server</module>

@@ -11,7 +11,7 @@
     <artifactId>server</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>ADFI - Geonames Index - Server</name>
-    <url>http://fascinator.usq.edu.au/todo</url>
+    <url>http://code.google.com/p/solr-geonames/</url>
     <dependencies>
         <dependency>
             <groupId>org.apache.solr</groupId>
