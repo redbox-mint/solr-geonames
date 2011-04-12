@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 usage() {
     echo "This script requires the first parameter to be in the input file to ingest."
