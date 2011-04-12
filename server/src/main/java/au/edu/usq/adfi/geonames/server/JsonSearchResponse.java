@@ -172,6 +172,12 @@ public class JsonSearchResponse implements OpenSearchResponse {
                 value = ((Date) object).toString();
             }
             output += escape(key, value);
+
+            // When we come across the ID, add in a Geonames URI
+            if (key.equals("id")) {
+                output += ",\n"+escape("geonames_uri",
+                        "http://sws.geonames.org/"+value+"/");
+            }
         }
         // Display string
         String name = (String) doc.getFieldValue("basic_name");
