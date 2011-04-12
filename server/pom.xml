@@ -9,6 +9,7 @@
     </parent>
     <groupId>au.edu.usq.adfi.geonames</groupId>
     <artifactId>server</artifactId>
+    <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
     <name>ADFI - Geonames Index - Server</name>
     <url>http://code.google.com/p/solr-geonames/</url>
@@ -94,6 +95,7 @@
         </profile>
     </profiles>
     <build>
+        <finalName>geonames</finalName>
         <resources>
             <resource>
                 <directory>src/main/webapp</directory>
