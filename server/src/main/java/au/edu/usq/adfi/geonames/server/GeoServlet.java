@@ -82,7 +82,7 @@ public class GeoServlet extends HttpServlet {
                 return;
             }
             // A search request
-            if (function.equals("search")) {
+            if (function.equals("search") || function.equals("debug")) {
                 // Suggest has the same data, but different output.
                 search(request, response);
                 return;
@@ -126,7 +126,7 @@ public class GeoServlet extends HttpServlet {
         // Run our query
         QueryResponse result = null;
         try {
-            result = runQuery("id:"+id, 0, 1, "*,score", null);
+            result = runQuery("id:"+id, 0, 1, "*,score", null, null, 0);
 
         } catch (Exception ex) {
             resp.setStatus(500); // 500: Server error
@@ -191,8 +191,17 @@ public class GeoServlet extends HttpServlet {
         // Run our query
         QueryResponse result = null;
         try {
-            result = runQuery(query, iStart, iRows,
-                    "*,score", "feature_code:PPL*");
+            String func = req.getParameter("func");
+            if (func.equals("debug")) {
+                String[] facets = {"country_code", "feature_class", "feature_code"};
+                String fq = req.getParameter("fq");
+                result = runQuery(query, iStart, iRows,
+                        "*,score", fq, facets, 100);
+            } else {
+                String fq = req.getParameter("fq");
+                result = runQuery(query, iStart, iRows,
+                        "*,score", fq, null, 0);
+            }
 
         } catch (Exception ex) {
             resp.setStatus(500); // 500: Server error
@@ -221,7 +230,8 @@ public class GeoServlet extends HttpServlet {
      * @throws IOException If errors found
      */
     private QueryResponse runQuery(String query, int start, int rows,
-            String fields, String filter) throws Exception {
+            String fields, String filter, String[] facets, int facetLimit)
+            throws Exception {
         SolrQuery q = new SolrQuery();
         q.setQuery(query);
         q.setStart(start);
@@ -229,6 +239,13 @@ public class GeoServlet extends HttpServlet {
         q.setFields(fields);
         if (filter != null) {
             q.setFilterQueries(filter);
+        }
+        if (facets != null) {
+            q.setFacet(true);
+            q.setFacetLimit(facetLimit);
+            q.addFacetField(facets);
+        } else {
+            q.setFacet(false);
         }
         return solrServer.query(q);
     }
@@ -279,6 +296,11 @@ public class GeoServlet extends HttpServlet {
         // or HTML, we are using HTML either way
         if (function != null && function.equals("detail")) {
             HtmlDetailResponse renderer = new HtmlDetailResponse();
+            renderer.init(request);
+            return renderer;
+        }
+        if (function != null && function.equals("debug")) {
+            HtmlDebugResponse renderer = new HtmlDebugResponse();
             renderer.init(request);
             return renderer;
         }
