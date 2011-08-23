@@ -5,7 +5,7 @@
     <groupId>com.googlecode.solr-geonames</groupId>
     <artifactId>solr-geonames</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <parent>
         <groupId>org.sonatype.oss</groupId>
         <artifactId>oss-parent</artifactId>
@@ -35,9 +35,9 @@
         <url>https://redbox-build.cqu.edu.au/jenkins/</url>
     </ciManagement>
     <scm>
-        <url>http://solr-geonames.googlecode.com/svn/trunk</url> 
-        <connection>scm:svn:http://solr-geonames.googlecode.com/svn/trunk</connection> 
-        <developerConnection>scm:svn:https://solr-geonames.googlecode.com/svn/trunk</developerConnection> 
+        <url>http://solr-geonames.googlecode.com/svn/tags/solr-geonames-1.0</url> 
+        <connection>scm:svn:http://solr-geonames.googlecode.com/svn/tags/solr-geonames-1.0</connection> 
+        <developerConnection>scm:svn:https://solr-geonames.googlecode.com/svn/tags/solr-geonames-1.0</developerConnection> 
     </scm>
     <developers>
         <developer>
