@@ -16,12 +16,13 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package au.edu.usq.adfi.geonames.server;
+package com.googlecode.solrgeonames.server;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
@@ -30,15 +31,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A Response wrapper to rendering output for the 'search' function.
+ * A Response wrapper to rendering output for the 'detail' function.
  *
  * @author Greg Pendlebury
  */
-public class JsonSearchResponse implements OpenSearchResponse {
+public class JsonDetailResponse implements OpenSearchResponse {
     /** Logging */
-    private static Logger log = LoggerFactory.getLogger(JsonSearchResponse.class);
-
-    private HttpServletRequest request;
+    private static Logger log = LoggerFactory.getLogger(JsonDetailResponse.class);
 
     /**
      * An initialisation function giving access to the HTTP input.
@@ -47,7 +46,6 @@ public class JsonSearchResponse implements OpenSearchResponse {
      */
     @Override
     public void init(HttpServletRequest request) {
-        this.request = request;
     }
 
     /**
@@ -58,58 +56,6 @@ public class JsonSearchResponse implements OpenSearchResponse {
      */
     @Override
     public String renderResponse(QueryResponse results) {
-        return "{\n"+headResponse(results)+",\n"+listResponse(results)+"\n}";
-    }
-
-    /**
-     * Render a response indicated no results were returned
-     *
-     * @return String: The rendered output
-     */
-    @Override
-    public String renderEmptyResponse() {
-        return "{\n"+headResponse(null)+",\n\"results\": []\n}";
-    }
-
-    /**
-     * Create a response header string for the result set.
-     *
-     * @param results: The Solr results
-     * @return String: Header block
-     */
-    private String headResponse(QueryResponse results) {
-        // Start index
-        String start = request.getParameter("start");
-        if (start == null || start.equals("")) {
-            start = GeoServlet.DEFAULT_START;
-        }
-
-        // Rows
-        String rows = request.getParameter("rows");
-        if (rows == null || rows.equals("")) {
-            rows = GeoServlet.DEFAULT_ROWS;
-        }
-
-
-        String inner = escape("title", "Generic Search")+",\n";
-        if (results == null) {
-            inner += escape("totalResults", "0")+",\n";
-        } else {
-            SolrDocumentList list = results.getResults();
-            inner += escape("totalResults", list.getNumFound())+",\n";
-        }
-        inner += escape("startIndex", start)+",\n";
-        inner += escape("itemsPerPage", rows)+"\n";
-        return "\"OpenSearchResponse\": {\n"+inner+"\n}";
-    }
-
-    /**
-     * Create a results string for the result set.
-     *
-     * @param results: The Solr results
-     * @return String: Results section in JSON
-     */
-    private String listResponse(QueryResponse results) {
         // Render each row
         SolrDocumentList list = results.getResults();
         List<String> rows = new ArrayList();
@@ -117,8 +63,15 @@ public class JsonSearchResponse implements OpenSearchResponse {
             rows.add(renderRow(doc));
         }
 
-        String joined = join(rows, ",\n");
-        return "\"results\": [\n"+joined+"\n]";
+        // Are we returning a single value?
+        if (list.size() == 1) {
+            return rows.get(0);
+
+        // Or a list?
+        } else {
+            String joined = join(rows, ",\n");
+            return "[\n"+joined+"\n]";
+        }
     }
 
     /**
@@ -171,50 +124,21 @@ public class JsonSearchResponse implements OpenSearchResponse {
             if (object instanceof Date) {
                 value = ((Date) object).toString();
             }
-            output += escape(key, value);
-
-            // When we come across the ID, add in a Geonames URI
-            if (key.equals("id")) {
-                output += ",\n"+escape("geonames_uri",
-                        "http://sws.geonames.org/"+value+"/");
-            }
+            key = key.replace("\"", "\\\"");
+            value = value.replace("\"", "\\\"");
+            output += "\""+key+"\": \""+value+"\"";
         }
-        // Display string
-        String name = (String) doc.getFieldValue("basic_name");
-        String country = (String) doc.getFieldValue("country_code");
-        String timezone = (String) doc.getFieldValue("timezone");
-        String display = name+", "+country+" ("+timezone+")";
-        output += ",\n"+escape("display", display);
-
         return "{\n"+output+"\n}";
     }
 
     /**
-     * Simple escape function to avoid typos when
-     * joining a key/value pair into JSON
+     * Render a response indicated no results were returned
      *
-     * @param key: The key string
-     * @param value The value string
-     * @return String: The key value pair escape, quoted and joined
+     * @return String: The rendered output
      */
-    private String escape(String key, long value) {
-        return escape(key, String.valueOf(value));
-    }
-
-    /**
-     * Simple escape function to avoid typos when
-     * joining a key/value pair into JSON
-     *
-     * @param key: The key string
-     * @param value The value string
-     * @return String: The key value pair escape, quoted and joined
-     */
-    private String escape(String key, String value) {
-        key = key.replace("\"", "\\\"");
-        key = key.replace("\\", "\\\\");
-        value = value.replace("\"", "\\\"");
-        value = value.replace("\\", "\\\\");
-        return "\""+key+"\": \""+value+"\"";
+    @Override
+    public String renderEmptyResponse() {
+        return "{\"Error\": \"ID not found\"}";
     }
 
     /**

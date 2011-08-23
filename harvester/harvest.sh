@@ -21,6 +21,6 @@ if [ -f $1 ]; then
     export MAVEN_OPTS="-XX:MaxPermSize=512m -Xmx1024m"
 	mvn $MAVEN_ARGS $SOLR_HOME \
 		-Dexec.args="$PROGRAM_DIR/$INPUT_FILE" \
-		-Dexec.mainClass=au.edu.usq.adfi.geonames.harvester.Harvester \
+		-Dexec.mainClass=com.googlecode.solrgeonames.harvester.Harvester \
 		exec:java
 fi

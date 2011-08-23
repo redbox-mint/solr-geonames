@@ -2,37 +2,66 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.googlecode.solr-geonames</groupId>
+    <artifactId>solr-geonames-server</artifactId>
+    <packaging>war</packaging>
     <parent>
-        <artifactId>geonames</artifactId>
-        <groupId>au.edu.usq.adfi.geonames</groupId>
+        <groupId>com.googlecode.solr-geonames</groupId>
+        <artifactId>solr-geonames</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <groupId>au.edu.usq.adfi.geonames</groupId>
-    <artifactId>server</artifactId>
-    <packaging>war</packaging>
-    <version>1.0-SNAPSHOT</version>
-    <name>ADFI - Geonames Index - Server</name>
+
+    <name>Geonames Solr Index - Server</name>
     <url>http://code.google.com/p/solr-geonames/</url>
+
     <dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>log4j-over-slf4j</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.apache.solr</groupId>
             <artifactId>solr-core</artifactId>
             <version>3.3.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-jdk14</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.solr</groupId>
             <artifactId>solr-solrj</artifactId>
             <version>3.3.0</version>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
-            <version>0.9.17</version>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>0.9.17</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -40,6 +69,7 @@
             <version>2.5</version>
         </dependency>
     </dependencies>
+
     <profiles>
         <profile>
             <id>dev</id>
@@ -89,6 +119,7 @@
             </build>
         </profile>
     </profiles>
+
     <build>
         <finalName>geonames</finalName>
         <resources>
@@ -104,6 +135,25 @@
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.1-beta-1</version>
+                <executions>
+                    <execution>
+                        <id>create-skinny-war</id>
+                        <goals>
+                            <goal>war</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>skinny</classifier>
+                            <packagingExcludes>WEB-INF/lib/*</packagingExcludes>
+                        </configuration>
+                    </execution>
+                </executions>
+                <configuration>
+                    <attachClasses>true</attachClasses>
                 </configuration>
             </plugin>
         </plugins>

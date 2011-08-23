@@ -16,10 +16,10 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package au.edu.usq.adfi.geonames.server;
+package com.googlecode.solrgeonames.server;
 
-import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 
@@ -27,13 +27,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A Response wrapper to rendering output for the 'detail' function.
+ * A Response wrapper to rendering output for the 'search' function.
  *
  * @author Greg Pendlebury
  */
-public class HtmlDetailResponse implements OpenSearchResponse {
+public class HtmlSearchResponse implements OpenSearchResponse {
     /** Logging */
-    private static Logger log = LoggerFactory.getLogger(HtmlDetailResponse.class);
+    private static Logger log = LoggerFactory.getLogger(HtmlSearchResponse.class);
 
     /**
      * An initialisation function giving access to the HTTP input.
@@ -60,29 +60,13 @@ public class HtmlDetailResponse implements OpenSearchResponse {
     }
 
     private String renderRow(SolrDocument doc) {
-        String output = "<p>";
-        for (String key : doc.keySet()) {
-            Object object = doc.getFieldValue(key);
-            String value = null;
-            if (object instanceof String) {
-                value = (String) doc.getFieldValue(key);
-            }
-            if (object instanceof Integer) {
-                value = String.valueOf((Integer) doc.getFieldValue(key));
-            }
-            if (object instanceof Float) {
-                value = String.valueOf((Float) doc.getFieldValue(key));
-            }
-            if (object instanceof Long) {
-                value = String.valueOf((Long) doc.getFieldValue(key));
-            }
-            if (object instanceof Date) {
-                value = ((Date) object).toString();
-            }
-            output += "<b>"+key+"</b>: "+value+"<br/>";
-        }
-        output += "</p>";
-        return output;
+        String id = (String) doc.getFieldValue("id");
+        String name = (String) doc.getFieldValue("basic_name");
+        String country = (String) doc.getFieldValue("country_code");
+        String timezone = (String) doc.getFieldValue("timezone");
+        String score = String.valueOf((Float) doc.getFieldValue("score"));
+        //return "<b><a href='?id="+id+"'>"+name+"</a></b>, "+country+", "+score+"<br/>";
+        return "<b><a href='/geonames/search?func=detail&amp;id="+id+"'>"+name+"</a></b>, "+country+" ("+timezone+")<br/>";
     }
 
     /**
@@ -92,7 +76,7 @@ public class HtmlDetailResponse implements OpenSearchResponse {
      */
     @Override
     public String renderEmptyResponse() {
-        return "Error, invalid ID";
+        return "Boo, 0 results";
     }
 
     /**
@@ -103,7 +87,7 @@ public class HtmlDetailResponse implements OpenSearchResponse {
      */
     @Override
     public String renderError(String message) {
-        return "Error: "+message;
+        return "Error: " + message;
     }
 
     /**

@@ -16,7 +16,7 @@
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-package au.edu.usq.adfi.geonames.harvester;
+package com.googlecode.solrgeonames.harvester;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -134,13 +134,6 @@ public class Harvester {
 
         reader = new BufferedReader(fileReader);
 
-        // Reduce Solr's logging
-        java.util.logging.Logger solrLogger = null;
-        solrLogger = java.util.logging.Logger.getLogger("org.apache.solr");
-        if (solrLogger == null) {
-            throw new Exception("Error accessing Solr's logger");
-        }
-        solrLogger.setLevel(Level.SEVERE);
         // Time to bring Solr online
         // Find the Solr home
         String solrHome = System.getProperty("geonames.solr.home");
