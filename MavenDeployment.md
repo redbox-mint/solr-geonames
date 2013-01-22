@@ -3,7 +3,7 @@ Introduction
 
 This process is identical to those used in our related projects:
  * http://code.google.com/p/the-fascinator/wiki/MavenDeployment
- * http://code.google.com/p/redbox-mint/wiki/DeployingMaven
+ * http://www.redboxresearchdata.com.au/public/documentation/technical/deploying-maven
 
 For the sake of brevity I have not repeated the instructions here, but below are the details specific to this project.
 
