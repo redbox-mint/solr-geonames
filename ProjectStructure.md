@@ -4,7 +4,7 @@ The top-level of this Project is simply an empty shell containing the two relate
 
 The *Harvester* Project is designed to ingest a Geonames data dump and build a Solr index.
 
-The *Server* Project is designed to created a simple Java Servlet running off the created Solr index. _IF_ you want to run a [DeveloperInstall dev server] from Maven you will want to copy the Solr index data from the harvester to the server, or modify the start script to point at the harvester's index.
+The *Server* Project is designed to created a simple Java Servlet running off the created Solr index. _IF_ you want to run a [dev server](DeveloperInstall.md) from Maven you will want to copy the Solr index data from the harvester to the server, or modify the start script to point at the harvester's index.
 
 History
 =====
