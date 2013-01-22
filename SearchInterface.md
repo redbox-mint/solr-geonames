@@ -14,14 +14,16 @@ Although additional, optional parameters are supported. A full list is below.
 Parameters
 =====
 
-|| *Parameter* || *Default* || *Options* || *Notes* ||
-|| `func` || N/A || `search`, `detail` or `debug` || Required parameter ||
-|| `q` || N/A || Any search terms || Required parameter for '`search`' function ||
-|| `id` || N/A || Any Geonames ID || Required parameter for '`detail`' function ||
-|| `format` || `html` || `html` or `json` || Output format requested, see further notes below ||
-|| `rows` || `20` || Any integer || Number of results to return per 'page' ||
-|| `start` || `0` || Any integer || The row count to start at, typically for paging ||
-|| `fq` || N/A || Any Solr query || The filter query to apply during search. Optional ||
+<table>
+<tr><th> Parameter </th><th> Default </th><th> Options </th><th> Notes </th></tr>
+<tr><td> `func` </td><td> N/A </td><td> `search`, `detail` or `debug` </td><td> Required parameter </td></tr>
+<tr><td> `q` </td><td> N/A </td><td> Any search terms </td><td> Required parameter for '`search`' function </td></tr>
+<tr><td> `id` </td><td> N/A </td><td> Any Geonames ID </td><td> Required parameter for '`detail`' function </td></tr>
+<tr><td> `format` </td><td> `html` </td><td> `html` or `json` </td><td> Output format requested, see further notes below </td></tr>
+<tr><td> `rows` </td><td> `20` </td><td> Any integer </td><td> Number of results to return per 'page' </td></tr>
+<tr><td> `start` </td><td> `0` </td><td> Any integer </td><td> The row count to start at, typically for paging </td></tr>
+<tr><td> `fq` </td><td> N/A </td><td> Any Solr query </td><td> The filter query to apply during search. Optional </td></tr>
+</table>
 
 Alternate Names
 =====
