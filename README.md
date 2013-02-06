@@ -1,4 +1,4 @@
-*NOTE:* This project was migrated from https://code.google.com/p/solr-geonames/
+*NOTE:* This project was migrated from https://code.google.com/p/solr-geonames/ 
 Overview
 =============
 This project has a pair of basic Java applications:
