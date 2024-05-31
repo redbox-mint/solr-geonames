@@ -1,0 +1,28 @@
+version: 2.1
+orbs:
+  docker: circleci/docker@1.7.0
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.7
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Build and push Docker image
+          command: |
+            if [ ! -z "$CIRCLE_BRANCH" ]; then
+               export TAG="$CIRCLE_BRANCH";
+            fi;
+
+            if [ -z "$CIRCLE_BRANCH" ]; then
+                export TAG="$CIRCLE_TAG";
+            fi;
+            docker build -t qcifengineering/solr-geonames-indexer:${TAG} .
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+            docker push qcifengineering/solr-geonames-indexer:${TAG}
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build
