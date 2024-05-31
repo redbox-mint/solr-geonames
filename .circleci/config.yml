@@ -18,9 +18,10 @@ jobs:
             if [ -z "$CIRCLE_BRANCH" ]; then
                 export TAG="$CIRCLE_TAG";
             fi;
-            docker build -t qcifengineering/solr-geonames-indexer:${TAG} .
+            export DEPLOY_TAG=${TAG/\//-}
+            docker build -t qcifengineering/solr-geonames-indexer:${DEPLOY_TAG} .
             docker login -u $DOCKER_USER -p $DOCKER_PASS
-            docker push qcifengineering/solr-geonames-indexer:${TAG}
+            docker push qcifengineering/solr-geonames-indexer:${DEPLOY_TAG}
 workflows:
   version: 2
   build-deploy:
