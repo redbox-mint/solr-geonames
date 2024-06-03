@@ -3,9 +3,9 @@ const fs = require('fs');
 const readline = require('readline');
 
 
-let geonamesFilePath = 'allCountries.txt';
+let geonamesFilePath = '/opt/allCountries.txt';
 let corename = 'geonames';
-let solrUrl = 'http://localhost:8983/solr/';
+let solrUrl = 'http://localhost:8983/solr';
 
 const args = process.argv.slice(2);
 args.forEach((arg, index) => {
@@ -19,6 +19,8 @@ args.forEach((arg, index) => {
         solrUrl = args[index + 1];
     }
 });
+
+console.log(`Running with core=${corename} file=${geonamesFilePath} url=${solrUrl}`);
 
 
 // Function to define Solr schema
@@ -57,12 +59,15 @@ async function defineSchema() {
 
 // Function to parse and index Geonames data
 async function parseAndIndexGeonames() {
+    console.log('Building documents');
+
     const fileStream = fs.createReadStream(geonamesFilePath);
     const rl = readline.createInterface({
         input: fileStream,
         crlfDelay: Infinity
     });
 
+    let docs = [];
     for await (const line of rl) {
         const parts = line.split('\t');
         const doc = {
@@ -86,13 +91,17 @@ async function parseAndIndexGeonames() {
             timezone: parts[17],
             modification_date: parts[18]
         };
-
-        try {
-            const response = await axios.post(`${solrUrl}/${corename}/update?commit=true`, [doc]);
-            console.log('Document indexed successfully:', response.data);
-        } catch (error) {
-            console.error('Error indexing document:', error);
+        docs.push(doc);
+        if (docs.length % 100 === 0){
+            console.log(`Built ${docs.length} documents.`);
         }
+    }
+
+    try {
+        const response = await axios.post(`${solrUrl}/${corename}/update?commit=true`, docs);
+        console.log(`Indexed ${docs.length} documents successfully:`, response.data);
+    } catch (error) {
+        console.error('Error indexing document:', error);
     }
 }
 
