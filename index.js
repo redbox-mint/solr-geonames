@@ -57,9 +57,18 @@ async function defineSchema() {
     }
 }
 
+async function indexGeonames(docs) {
+    try {
+        const response = await axios.post(`${solrUrl}/${corename}/update?commit=true`, docs);
+        console.log(`Indexed ${docs.length} documents successfully:`, response.data);
+    } catch (error) {
+        console.error('Error indexing document:', error);
+    }
+}
+
 // Function to parse and index Geonames data
 async function parseAndIndexGeonames() {
-    console.log('Building documents');
+    console.log('Building and indexing documents');
 
     const fileStream = fs.createReadStream(geonamesFilePath);
     const rl = readline.createInterface({
@@ -67,6 +76,7 @@ async function parseAndIndexGeonames() {
         crlfDelay: Infinity
     });
 
+    const itemsInGroup = 100;
     let docs = [];
     for await (const line of rl) {
         const parts = line.split('\t');
@@ -92,16 +102,15 @@ async function parseAndIndexGeonames() {
             modification_date: parts[18]
         };
         docs.push(doc);
-        if (docs.length % 100 === 0){
-            console.log(`Built ${docs.length} documents.`);
+
+        if (docs.length % itemsInGroup === 0) {
+            await indexGeonames(docs);
+            docs = [];
         }
     }
 
-    try {
-        const response = await axios.post(`${solrUrl}/${corename}/update?commit=true`, docs);
-        console.log(`Indexed ${docs.length} documents successfully:`, response.data);
-    } catch (error) {
-        console.error('Error indexing document:', error);
+    if (docs.length > 0) {
+        await indexGeonames(docs);
     }
 }
 
