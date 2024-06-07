@@ -28,8 +28,8 @@ async function defineSchema() {
     const schemaConfig = {
         "add-field": [
             {"name": "geonameid", "type": "string", "stored": true},
-            {"name": "name", "type": "text_general", "stored": true},
-            {"name": "asciiname", "type": "text_general", "stored": true},
+            {"name": "title", "type": "text_general", "stored": true},
+            {"name": "basic_name", "type": "text_general", "stored": true},
             {"name": "alternatenames", "type": "text_general", "stored": true},
             {"name": "latitude", "type": "pdouble", "stored": true},
             {"name": "longitude", "type": "pdouble", "stored": true},
@@ -62,7 +62,7 @@ async function indexGeonames(docs) {
         const response = await axios.post(`${solrUrl}/${corename}/update?commit=true`, docs);
         console.log(`Indexed ${docs.length} documents successfully:`, response.data);
     } catch (error) {
-        console.error('Error indexing document:', error);
+        console.error('Error indexing documents:', error);
     }
 }
 
@@ -82,8 +82,8 @@ async function parseAndIndexGeonames() {
         const parts = line.split('\t');
         const doc = {
             geonameid: parts[0],
-            name: parts[1],
-            asciiname: parts[2],
+            title: parts[1],
+            basic_name: parts[2],
             alternatenames: parts[3],
             latitude: parseFloat(parts[4]),
             longitude: parseFloat(parts[5]),

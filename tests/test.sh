@@ -27,6 +27,6 @@ docker compose -f docker-compose.yml up -d
 # curl http://localhost:8983/solr/solr-geonames/schema | grep geonameid
 
 # example query
-curl "http://localhost:8983/solr/solr-geonames/query?q=name:Factory"
+curl "http://localhost:8983/solr/solr-geonames/select?q=name:Factory"
 
 docker compose -f docker-compose.yml down -v
