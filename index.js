@@ -24,28 +24,30 @@ console.log(`Running with core=${corename} file=${geonamesFilePath} url=${solrUr
 
 
 // Function to define Solr schema
+// based on previous schema:
+// https://github.com/redbox-mint/solr-geonames/blob/811877c1916fb1c29e4215a2fa7f36b657048074/server/solr/conf/schema.xml#L22
 async function defineSchema() {
     const schemaConfig = {
         "add-field": [
-            {"name": "geonameid", "type": "string", "stored": true},
-            {"name": "title", "type": "text_general", "stored": true},
+            {"name": "id", "type": "string", "stored": true},
+            {"name": "utf8_name", "type": "text_general", "stored": true},
             {"name": "basic_name", "type": "text_general", "stored": true},
-            {"name": "alternatenames", "type": "text_general", "stored": true},
+            {"name": "alternatenames", "type": "text_general", "stored": true}, // new
             {"name": "latitude", "type": "pdouble", "stored": true},
             {"name": "longitude", "type": "pdouble", "stored": true},
             {"name": "feature_class", "type": "string", "stored": true},
             {"name": "feature_code", "type": "string", "stored": true},
             {"name": "country_code", "type": "string", "stored": true},
-            {"name": "cc2", "type": "string", "stored": true},
-            {"name": "admin1_code", "type": "string", "stored": true},
-            {"name": "admin2_code", "type": "string", "stored": true},
-            {"name": "admin3_code", "type": "string", "stored": true},
-            {"name": "admin4_code", "type": "string", "stored": true},
+            {"name": "cc2", "type": "string", "stored": true}, // new
+            {"name": "admin1_code", "type": "string", "stored": true}, // new
+            {"name": "admin2_code", "type": "string", "stored": true}, // new
+            {"name": "admin3_code", "type": "string", "stored": true}, // new
+            {"name": "admin4_code", "type": "string", "stored": true}, // new
             {"name": "population", "type": "plong", "stored": true},
             {"name": "elevation", "type": "plong", "stored": true},
-            {"name": "dem", "type": "plong", "stored": true},
+            {"name": "gtopo30", "type": "plong", "stored": true},
             {"name": "timezone", "type": "string", "stored": true},
-            {"name": "modification_date", "type": "pdate", "stored": true}
+            {"name": "date_modified", "type": "pdate", "stored": true}
         ]
     };
 
@@ -81,8 +83,8 @@ async function parseAndIndexGeonames() {
     for await (const line of rl) {
         const parts = line.split('\t');
         const doc = {
-            geonameid: parts[0],
-            title: parts[1],
+            id: parts[0],
+            utf8_name: parts[1],
             basic_name: parts[2],
             alternatenames: parts[3],
             latitude: parseFloat(parts[4]),
@@ -97,9 +99,9 @@ async function parseAndIndexGeonames() {
             admin4_code: parts[13],
             population: parseInt(parts[14], 10),
             elevation: parseInt(parts[15], 10),
-            dem: parseInt(parts[16], 10),
+            gtopo30: parseInt(parts[16], 10),
             timezone: parts[17],
-            modification_date: parts[18]
+            date_modified: parts[18]
         };
         docs.push(doc);
 
