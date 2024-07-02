@@ -59,6 +59,31 @@ async function defineSchema() {
     }
 }
 
+// Function to define default search field.
+// df: 'default field' specifies which field will be searched when none are given in the query
+// ref: https://solr.apache.org/guide/solr/latest/query-guide/standard-query-parser.html#standard-query-parser-parameters
+// based on previous schema:
+// https://github.com/redbox-mint/solr-geonames/blob/811877c1916fb1c29e4215a2fa7f36b657048074/server/solr/conf/schema.xml#L46
+async function updateConfig() {
+    const data = {
+        "update-requesthandler": {
+            "name": "/select",
+            "class": "solr.SearchHandler",
+            "defaults": {
+                "echoParams": "explicit",
+                "rows": 10,
+                "df": "basic_name",
+            }
+        }
+    };
+    try {
+        const response = await axios.post(`${solrUrl}/${corename}/config`, data);
+        console.log('Config updated successfully:', response.data);
+    } catch (error) {
+        console.error('Error updating config:', error);
+    }
+}
+
 async function indexGeonames(docs) {
     try {
         const response = await axios.post(`${solrUrl}/${corename}/update?commit=true`, docs);
@@ -121,6 +146,9 @@ async function main() {
     try {
         console.log('Defining Solr schema...');
         await defineSchema();
+
+        console.log('Updating Solr config...');
+        await updateConfig();
 
         console.log('Parsing and indexing Geonames data...');
         await parseAndIndexGeonames();
