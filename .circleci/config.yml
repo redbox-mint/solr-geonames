@@ -27,6 +27,11 @@ jobs:
           name: Prepare the test
           command: npm run test:clean
       - run:
+          # TODO: chmod 777 isn't great, but the permission errors were getting too complicated
+          name: Change project dir ownership to work in docker container
+          command: |
+            sudo chmod -R 'u=rwx,g=rwx,o=rwx' /home/circleci/project
+      - run:
           name: Run tests
           command: npm run test
       - store_test_results:
