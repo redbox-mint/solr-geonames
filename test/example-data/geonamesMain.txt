@@ -1,0 +1,45 @@
+2078064	Kahui Number 2	Kahui Number 2		-39.31667	123.93333	T	HLL	NZ		00				0		-9999	Pacific/Auckland	1993-12-30
+2113868	Puke Range	Puke Range		-36.78333	175.13333	T	MTS	NZ		00				0		95	Pacific/Auckland	2010-09-06
+2178887	The Alderman Islands	The Alderman Islands	Alderman Islands,The Aldermen	-36.96667	176.08333	T	ISLS	NZ		00				0		-9999	Pacific/Auckland	1998-11-02
+2178888	Tahorakui	Tahorakui	Tahorakuri	-38.47896	176.27242	P	PPL	NZ		E8	024			0		336	Pacific/Auckland	2017-09-15
+2178889	Manukau County	Manukau County	Manukau	-37	175	A	ADMD	NZ		00				0		70	Pacific/Auckland	1993-12-30
+2178890	Bartlett Creek	Bartlett Creek	Bartletts Creek	-41.51667	173.6	H	STM	NZ		00				0		188	Pacific/Auckland	1993-12-30
+2178891	Bartlett	Bartlett	Bartlett's	-38.85	177.88333	P	PPL	NZ		F1	028			0		209	Pacific/Auckland	2011-08-01
+2178892	Barrier Branch	Barrier Branch	Barrier River	-44.45	168.23333	H	STM	NZ		00				0		386	Pacific/Auckland	1993-12-30
+2178893	Ball Road	Ball Road	Ball Road Station	-39.68333	174.43333	S	RSTN	NZ		F9	035			0		99	Pacific/Auckland	2011-08-01
+2178894	Arawhata Stream	Arawhata Stream	Arawhaiu Stream,Awahaiu	-39.05	177.05	H	STM	NZ		00				0		135	Pacific/Auckland	1993-12-30
+2178895	Askew Hill	Askew Hill	Askews Hill	-41.03333	173.7	T	MT	NZ		F4	053			0		286	Pacific/Auckland	2016-06-22
+2178896	Arthur’s Pass	Arthur's Pass	Arthur's Pass,Arturs Pass,Артурс Пасс	-42.95	171.56667	P	PPL	NZ		E9	062			930		745	Pacific/Auckland	2011-08-01
+2178897	Ardmore College	Ardmore College	Ardmore	-37.03333	175	P	PPL	NZ		E7	076			0		33	Pacific/Auckland	2022-01-04
+2178898	Zora Glacier	Zora Glacier		-43.76667	169.85	H	GLCR	NZ		00				0		1590	Pacific/Auckland	1993-12-30
+2178899	Zora Creek	Zora Creek		-43.81667	169.83333	H	STM	NZ		00				0		878	Pacific/Auckland	1993-12-30
+2178900	Zit Creek	Zit Creek		-42.96667	171.15	H	STM	NZ		00				0		497	Pacific/Auckland	1993-12-30
+2178901	Zig-zag Creek	Zig-zag Creek		-44.1	169.35	H	STM	NZ		00				0		731	Pacific/Auckland	1993-12-30
+2178902	Zigzag	Zigzag		-43.65	172.91667	T	MT	NZ		E9	060			0		89	Pacific/Auckland	2016-06-22
+2178903	Mount Zieland	Mount Zieland		-43.88333	169.35	T	MT	NZ		G3	057			0		1581	Pacific/Auckland	2016-06-22
+2178904	Mount Zetland	Mount Zetland		-41.4	172.28333	T	MT	NZ		G3	055			0		1311	Pacific/Auckland	2016-06-22
+2178905	Zeilian Creek	Zeilian Creek		-43.9	169.51667	H	STM	NZ		00				0		327	Pacific/Auckland	1993-12-30
+2178906	Mount Zeilian	Mount Zeilian		-43.85	169.51667	T	MT	NZ		G3	057			0		1464	Pacific/Auckland	2016-06-22
+2178907	Zampa	Zampa		-42.35	172.45	T	MT	NZ		E9	058			0		1433	Pacific/Auckland	2016-06-22
+2178908	Yvon Villarceau Peak	Yvon Villarceau Peak		-52.53333	169	T	PK	NZ		00				0		-9999	Pacific/Auckland	1993-12-30
+2178909	Yule Island	Yule Island		-50.55	166.3	T	ISL	NZ		00				0		-9999	Pacific/Auckland	1993-12-30
+2178910	Yoxon	Yoxon		-41.16667	174.8	T	MT	NZ		G2	047			0		299	Pacific/Auckland	2016-06-22
+2178911	Youngs Valley	Youngs Valley		-45.83333	169.65	T	VAL	NZ		00				0		389	Pacific/Auckland	1993-12-30
+2178912	Young River	Young River		-44.2	169.23333	H	STM	NZ		00				0		313	Pacific/Auckland	1993-12-30
+2178913	Young Range	Young Range		-44.21667	169.36667	T	MTS	NZ		00				0		1269	Pacific/Auckland	1993-12-30
+2178914	Young Peak	Young Peak	Young's Peak	-44.15	169.08333	T	PK	NZ		F7	070			0		1151	Pacific/Auckland	2011-08-01
+2178915	Young Nicks Head	Young Nicks Head	Te Kuri	-38.76667	177.96667	T	CAPE	NZ		00				0		-9999	Pacific/Auckland	1993-12-30
+2178916	Young Hill Creek	Young Hill Creek		-45.16667	169.5	H	STM	NZ		00				0		190	Pacific/Auckland	1993-12-30
+2178917	Mount Young	Mount Young		-43.13333	171.06667	T	MT	NZ		E9	063			0		1574	Pacific/Auckland	2016-06-22
+2178918	Mount Young	Mount Young		-36.2	175.38333	T	MT	NZ		E7	076			0		170	Pacific/Auckland	2016-06-22
+2178919	Mount York	Mount York		-45.56667	167.73333	T	MT	NZ		F8	073			0		308	Pacific/Auckland	2016-06-22
+2178920	Mount York	Mount York		-40.7	176.16667	T	MT	NZ		G2	048			0		96	Pacific/Auckland	2016-06-22
+2178921	Yncyca Bay	Yncyca Bay		-41.13333	173.9	H	BAY	NZ		00				0		63	Pacific/Auckland	1993-12-30
+2178922	Yeo Stream	Yeo Stream		-42.1	173.26667	H	STM	NZ		00				0		896	Pacific/Auckland	1993-12-30
+2178923	Yeomans Creek	Yeomans Creek		-44.75	170.2	H	STM	NZ		00				0		575	Pacific/Auckland	1993-12-30
+2178924	Yellow Hill	Yellow Hill		-45.68333	170.13333	T	MT	NZ		F7	071			0		412	Pacific/Auckland	2016-06-22
+2178925	Yellow Hill	Yellow Hill		-45.56667	170.35	T	MT	NZ		F7	071			0		662	Pacific/Auckland	2016-06-22
+2178926	Yates Point	Yates Point		-44.5	167.8	T	PT	NZ		00				0		-9999	Pacific/Auckland	1993-12-30
+2178927	Yarrow Stream	Yarrow Stream		-39.66667	176.56667	H	STM	NZ		00				0		139	Pacific/Auckland	1993-12-30
+2178928	Yarra River	Yarra River		-42.23333	173.06667	H	STM	NZ		00				0		819	Pacific/Auckland	1993-12-30
+2178929	Yard Creek	Yard Creek		-45.18333	169.35	H	STM	NZ		00				0		230	Pacific/Auckland	1993-12-30

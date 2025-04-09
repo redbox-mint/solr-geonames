@@ -1,29 +1,81 @@
 version: 2.1
-orbs:
-  docker: circleci/docker@1.7.0
+
 jobs:
-  build:
-    docker:
-      - image: circleci/python:3.7
+  build-test:
+    machine:
+      image: ubuntu-2004:current
+      docker_layer_caching: true
+    resource_class: large
+    environment:
+      BUILDKIT_PROGRESS: 'plain'
+      COMPOSE_ANSI: 'never'
     steps:
       - checkout
-      - setup_remote_docker
+      - restore_cache:
+          keys:
+            - v1-node-{{ .Branch }}-{{ checksum "package-lock.json" }}
+            - v1-node-{{ .Branch }}
+            - v1-node
       - run:
-          name: Build and push Docker image
-          command: |
-            if [ ! -z "$CIRCLE_BRANCH" ]; then
-               export TAG="$CIRCLE_BRANCH";
-            fi;
+          name: Install packages
+          command: npm ci --strict-peer-deps --ignore-scripts
+      - save_cache:
+          key: v1-node-{{ .Branch }}-{{ checksum "package-lock.json" }}
+          paths:
+            - ~/.npm
+      - run:
+          name: Prepare the test
+          command: npm run test:clean
+      - run:
+          name: Run tests
+          command: npm run test
+      - store_test_results:
+          path: support/junit
 
-            if [ -z "$CIRCLE_BRANCH" ]; then
-                export TAG="$CIRCLE_TAG";
-            fi;
+  publish:
+    machine:
+      image: ubuntu-2004:current
+      docker_layer_caching: true
+    resource_class: large
+    environment:
+      BUILDKIT_PROGRESS: 'plain'
+      COMPOSE_ANSI: 'never'
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-node-{{ .Branch }}-{{ checksum "package-lock.json" }}
+            - v1-node-{{ .Branch }}
+            - v1-node
+      - run:
+          name: Install packages
+          command: npm ci --strict-peer-deps --ignore-scripts
+      - save_cache:
+          key: v1-node-{{ .Branch }}-{{ checksum "package-lock.json" }}
+          paths:
+            - ~/.npm
+      - run:
+          name: Compile the typescript
+          command: npm run compile
+      - run:
+          name: Build and deploy
+          command: |
+            export TAG="${CIRCLE_TAG:-$CIRCLE_BRANCH}"
             export DEPLOY_TAG=${TAG/\//-}
-            docker build -t qcifengineering/solr-geonames-indexer:${DEPLOY_TAG} .
+            docker build --tag qcifengineering/solr-geonames-indexer:${DEPLOY_TAG} .
             docker login -u $DOCKER_USER -p $DOCKER_PASS
             docker push qcifengineering/solr-geonames-indexer:${DEPLOY_TAG}
+
 workflows:
-  version: 2
-  build-deploy:
+  build-test-publish:
     jobs:
-      - build
+      - build-test:
+          filters:
+            tags:
+              only: /^v.*/
+      - publish:
+          requires:
+            - build-test
+          filters:
+            tags:
+              only: /^v.*/

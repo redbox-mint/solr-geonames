@@ -1,0 +1,29 @@
+name: 'solr-geonames-populate'
+
+# NOTE: This docker compose file expects the solr-geonames/support/docker-compose.dev.yml to be running.
+
+services:
+  solr-geonames:
+    container_name: "solr-geonames"
+    build:
+      context: '../'
+      dockerfile: './Dockerfile'
+      target: 'build'
+    volumes:
+      - "../support/.tmp-data:/opt/solr-geonames-data:ro"
+    command:
+      - --core
+      - solr-geonames
+      - --dir
+      - /opt/solr-geonames-data
+      - --solrUrl
+      - http://solr:8983/solr
+    networks:
+      main:
+        aliases:
+          - solr-geonames
+
+networks:
+  main:
+    name: support_main
+    external: true

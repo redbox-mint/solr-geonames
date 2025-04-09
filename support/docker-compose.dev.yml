@@ -1,17 +1,17 @@
-version: "3.1"
+networks:
+  main:
 
 volumes:
   data-solr:
 
 services:
-
   solr:
     container_name: "solr"
-    image: "solr:latest"
-    expose:
-      - "8983"
+    image: "solr:9.8"
     ports:
       - "8983:8983"
+    expose:
+      - "8983"
     volumes:
       - "data-solr:/var/solr"
     healthcheck:
@@ -19,36 +19,27 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+    networks:
+      main:
+        aliases:
+          - solr
     command:
       - "solr-precreate"
       - "solr-geonames"
 
   nginx:
     container_name: "nginx"
-    image: "nginx:latest"
+    image: "nginx:stable"
     expose:
       - "8080"
     ports:
       - "8080:8080"
-    depends_on:
-      - "solr"
-
-  solr-geonames:
-    container_name: "solr-geonames"
-    image: "qcifengineering/solr-geonames-indexer:local"
     volumes:
-      - "./:/opt/data:ro"
-    command:
-      - node
-      - index.js
-      - --core
-      - solr-geonames
-      - --file
-      - /opt/data/SM.txt
-      - --solrUrl
-      - http://solr:8983/solr
+      - "./nginx-default.conf:/etc/nginx/conf.d/default.conf:ro"
+    networks:
+      main:
+        aliases:
+          - nginx
     depends_on:
       solr:
         condition: service_healthy
-      nginx:
-        condition: service_started

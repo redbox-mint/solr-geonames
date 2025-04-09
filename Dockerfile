@@ -1,13 +1,24 @@
-FROM node:20
+FROM node:20.19.0 AS build
 
-# Set the working directory in the Docker image
-WORKDIR /usr/src/app
+ENV NODE_ENV=production
+ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
+ENV PATH=$PATH:/home/node/.npm-global/bin
 
+RUN echo "Australia/Brisbane" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
 
-# Copy the current directory contents into the container at /usr/src/app
-COPY . .
+ENV INSTALL_PATH="/opt/solr-geonames"
 
-RUN npm install
+RUN mkdir -p "${INSTALL_PATH}"
 
-# Run index.js with Node.js
-ENTRYPOINT [ "node", "index.js" ]
+WORKDIR "${INSTALL_PATH}"
+
+# Copy package.json & package-lock.json files and install
+COPY --chown=node:node *.json "${INSTALL_PATH}/"
+RUN npm ci --strict-peer-deps --ignore-scripts
+
+# Copy the source from the host
+COPY --chown=node:node build/src/ "${INSTALL_PATH}/build/src/"
+
+USER node
+
+ENTRYPOINT ["node", "build/src/index.js"]

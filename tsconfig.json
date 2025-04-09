@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "nodenext",
+    "moduleResolution": "NodeNext",
+    "isolatedModules": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "declaration": true,
+    "noImplicitAny": true,
+    "noImplicitUseStrict": false,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "removeComments": true,
+    "noLib": false,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "outDir": "./build",
+    "rootDir": "./",
+    "composite": true,
+    "allowSyntheticDefaultImports": true,
+    "types": ["node", "mocha", "lodash", "moment"]
+  },
+  "exclude": [
+    "node_modules/**"
+  ],
+  "include": [
+    "src/**/*.ts",
+    "test/**/*.ts",
+  ],
+  "compileOnSave": true,
+  "buildOnSave": false,
+  "atom": {
+    "rewriteTsconfig": false
+  },
+  "typeAcquisition": {
+    "include": [
+      "lodash",
+      "moment",
+    ]
+  }
+}
