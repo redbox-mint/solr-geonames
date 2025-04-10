@@ -6,6 +6,8 @@ services:
       context: '../'
       dockerfile: './Dockerfile'
       target: 'build'
+    environment:
+      - 'CI=${CI:-false}'
     volumes:
       - "../test/example-data:/opt/solr-geonames-data:ro"
       - "../:/opt/solr-geonames-testing"
