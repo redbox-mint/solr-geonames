@@ -161,4 +161,6 @@ export interface Admin1Codes {
   name: string
   nameAscii: string
   geonameId: string
+  country_code: string
+  admin1_code: string
 }

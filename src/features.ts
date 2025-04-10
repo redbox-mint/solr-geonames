@@ -178,11 +178,14 @@ async function buildSolrDocs(
     }
   }
 
-  const admin1CodesMap = new Map<string, Admin1Codes>();
+  const admin1CodesMap = new Map<string, Map<string, Admin1Codes>>();
   for (const item of raw.admin1Codes) {
-    const id = item.code;
-    if (!admin1CodesMap.has(id)) {
-      admin1CodesMap.set(id, item);
+    if (!admin1CodesMap.has(item.country_code)) {
+      admin1CodesMap.set(item.country_code, new Map<string, Admin1Codes>());
+    }
+    const admin1CountryCodesMap = admin1CodesMap.get(item.country_code);
+    if (!admin1CountryCodesMap.has(item.admin1_code)) {
+      admin1CountryCodesMap.set(item.admin1_code, item);
     }
   }
 
@@ -195,7 +198,7 @@ async function buildSolrDocs(
       const feature_class_name = featureClasses.get(location.feature_class) || location.feature_class;
       const feature_code_name = featureClassCodesMap.get(location.feature_class)?.get(location.feature_code)?.title || location.feature_code;
       const country_name = countriesMap.get(location.country_code)?.country || location.country_code;
-      let subdivision_name = admin1CodesMap.get(location.admin1_code)?.nameAscii || location.admin1_code;
+      let subdivision_name = admin1CodesMap.get(location.country_code)?.get(location.admin1_code)?.nameAscii || location.admin1_code;
       if (subdivision_name == "00") {
         subdivision_name = "";
       }

@@ -98,11 +98,15 @@ export async function parseAdmin1Codes(path: string) {
   const result: Admin1Codes[] = [];
   const lineCallback = async function (line: string) {
     const parts = line.split("\t");
+    const code = toStr(parts[0]);
+    const [country_code, admin1_code] = toStr(parts[0]).split(".");
     const doc: Admin1Codes = {
-      code: toStr(parts[0]),
+      code: code,
       name: toStr(parts[1]),
       nameAscii: toStr(parts[2]),
       geonameId: toStr(parts[3]),
+      country_code: country_code,
+      admin1_code: admin1_code,
     };
     return doc;
   };

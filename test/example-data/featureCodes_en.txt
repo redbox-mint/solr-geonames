@@ -7,3 +7,6 @@ T.ISL	island	a tract of land, smaller than a continent, surrounded by water at h
 T.ISLET	islet	small island, bigger than rock, smaller than island.
 T.ISLF	artificial island	an island created by landfill or diking and filling in a wetland, bay, or lagoon
 T.ISLM	mangrove island	a mangrove swamp surrounded by a waterbody
+T.MT	mountain	an elevation standing high above the surrounding area with small summit area, steep slopes and local relief of 300m or more
+T.MTS	mountains	a mountain range or a group of mountains or high ridges
+A.ADMD	administrative division	an administrative division of a country, undifferentiated as to administrative level

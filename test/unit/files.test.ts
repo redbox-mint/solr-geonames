@@ -41,6 +41,8 @@ describe("File parsing", () => {
         geonameId: "2179538",
         name: "Wellington Region",
         nameAscii: "Wellington Region",
+        country_code: "NZ",
+        admin1_code: "G2",
       },
     ];
     expect(expected[0]).to.eql(entries[0]);
