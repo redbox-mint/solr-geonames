@@ -1,5 +1,7 @@
+name: 'solr-geonames-dev'
+
 networks:
-  main:
+  main_solr_geonames:
 
 volumes:
   data-solr:
@@ -9,18 +11,18 @@ services:
     container_name: "solr"
     image: "solr:9.8"
     ports:
-      - "8983:8983"
+      - "9838:8983"
     expose:
       - "8983"
     volumes:
       - "data-solr:/var/solr"
     healthcheck:
-      test: [ "CMD-SHELL", "curl http://localhost:8983/solr" ]
+      test: [ "CMD-SHELL", "curl http://solr:8983/solr" ]
       interval: 5s
       timeout: 5s
       retries: 10
     networks:
-      main:
+      main_solr_geonames:
         aliases:
           - solr
     command:
@@ -37,7 +39,7 @@ services:
     volumes:
       - "./nginx-default.conf:/etc/nginx/conf.d/default.conf:ro"
     networks:
-      main:
+      main_solr_geonames:
         aliases:
           - nginx
     depends_on:

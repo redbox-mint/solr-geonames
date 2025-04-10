@@ -19,11 +19,11 @@ services:
       - --solrUrl
       - http://solr:8983/solr
     networks:
-      main:
+      main_solr_geonames:
         aliases:
           - solr-geonames
 
 networks:
-  main:
-    name: support_main
+  main_solr_geonames:
+    name: solr-geonames-dev_main_solr_geonames
     external: true
