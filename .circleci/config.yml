@@ -76,11 +76,22 @@ workflows:
     jobs:
       - build-test:
           filters:
+            branches:
+              ignore: /^dependabot.*/
             tags:
               only: /^v.*/
       - publish:
           requires:
             - build-test
           filters:
+            branches:
+              ignore: /^dependabot.*/
             tags:
               only: /^v.*/
+
+  dependabot-build-test:
+    jobs:
+      - build-test:
+          filters:
+            branches:
+              only: /^dependabot.*/
