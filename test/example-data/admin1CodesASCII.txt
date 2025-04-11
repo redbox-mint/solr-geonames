@@ -1,0 +1,17 @@
+NZ.G2	Wellington Region	Wellington Region	2179538
+NZ.F3	Manawatu-Wanganui	Manawatu-Wanganui	2179671
+NZ.G1	Waikato Region	Waikato Region	2180293
+NZ.TAS	Tasman District	Tasman District	2181818
+NZ.F9	Taranaki Region	Taranaki Region	2181872
+NZ.F8	Southland	Southland	2182501
+NZ.E8	Bay of Plenty	Bay of Plenty	2182560
+NZ.F6	Northland	Northland	2185978
+NZ.F4	Marlborough	Marlborough	2187304
+NZ.F2	Hawke's Bay Region	Hawke's Bay Region	2190146
+NZ.F1	Gisborne	Gisborne	2190767
+NZ.E9	Canterbury	Canterbury	2192628
+NZ.E7	Auckland	Auckland	2193734
+NZ.10	Chatham Islands	Chatham Islands	4033013
+NZ.F5	Nelson Region	Nelson Region	6612108
+NZ.F7	Otago	Otago	6612109
+NZ.G3	West Coast	West Coast	6612113

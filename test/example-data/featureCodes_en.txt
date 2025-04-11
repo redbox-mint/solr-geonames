@@ -1,0 +1,12 @@
+T.HLL	hill	a rounded elevation of limited extent rising above the surrounding land with local relief of less than 300m
+T.HLLS	hills	rounded elevations of limited extent rising above the surrounding land with local relief of less than 300m
+T.HMCK	hammock(s)	a patch of ground, distinct from and slightly above the surrounding plain or wetland. Often occurs in groups
+T.HMDA	rock desert	a relatively sand-free, high bedrock plateau in a hot desert, with or without a gravel veneer
+T.INTF	interfluve	a relatively undissected upland between adjacent stream valleys
+T.ISL	island	a tract of land, smaller than a continent, surrounded by water at high water
+T.ISLET	islet	small island, bigger than rock, smaller than island.
+T.ISLF	artificial island	an island created by landfill or diking and filling in a wetland, bay, or lagoon
+T.ISLM	mangrove island	a mangrove swamp surrounded by a waterbody
+T.MT	mountain	an elevation standing high above the surrounding area with small summit area, steep slopes and local relief of 300m or more
+T.MTS	mountains	a mountain range or a group of mountains or high ridges
+A.ADMD	administrative division	an administrative division of a country, undifferentiated as to administrative level

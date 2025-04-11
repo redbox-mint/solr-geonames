@@ -1,0 +1,86 @@
+version: 2.1
+
+jobs:
+  build-test:
+    machine:
+      image: ubuntu-2004:current
+      docker_layer_caching: true
+    resource_class: large
+    environment:
+      BUILDKIT_PROGRESS: 'plain'
+      COMPOSE_ANSI: 'never'
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-node-{{ .Branch }}-{{ checksum "package-lock.json" }}
+            - v1-node-{{ .Branch }}
+            - v1-node
+      - run:
+          name: Install packages
+          command: npm ci --strict-peer-deps --ignore-scripts
+      - save_cache:
+          key: v1-node-{{ .Branch }}-{{ checksum "package-lock.json" }}
+          paths:
+            - ~/.npm
+      - run:
+          name: Prepare the test
+          command: npm run test:clean
+      - run:
+          # TODO: chmod 777 isn't great, but the permission errors were getting too complicated
+          name: Change project dir ownership to work in docker container
+          command: |
+            sudo chmod -R 'u=rwx,g=rwx,o=rwx' /home/circleci/project
+      - run:
+          name: Run tests
+          command: npm run test
+      - store_test_results:
+          path: support/junit
+
+  publish:
+    machine:
+      image: ubuntu-2004:current
+      docker_layer_caching: true
+    resource_class: large
+    environment:
+      BUILDKIT_PROGRESS: 'plain'
+      COMPOSE_ANSI: 'never'
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-node-{{ .Branch }}-{{ checksum "package-lock.json" }}
+            - v1-node-{{ .Branch }}
+            - v1-node
+      - run:
+          name: Install packages
+          command: npm ci --strict-peer-deps --ignore-scripts
+      - save_cache:
+          key: v1-node-{{ .Branch }}-{{ checksum "package-lock.json" }}
+          paths:
+            - ~/.npm
+      - run:
+          name: Compile the typescript
+          command: npm run compile
+      - run:
+          name: Build and deploy
+          command: |
+            export TAG="${CIRCLE_TAG:-$CIRCLE_BRANCH}"
+            export DEPLOY_TAG=${TAG/\//-}
+            docker build --tag qcifengineering/solr-geonames-indexer:${DEPLOY_TAG} .
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+            docker push qcifengineering/solr-geonames-indexer:${DEPLOY_TAG}
+
+workflows:
+  build-test-publish:
+    jobs:
+      - build-test:
+          filters:
+            tags:
+              only: /^v.*/
+      - publish:
+          requires:
+            - build-test
+          filters:
+            tags:
+              only: /^v.*/

@@ -1,0 +1,29 @@
+services:
+
+  solr-geonames:
+    container_name: "solr-geonames"
+    build:
+      context: '../'
+      dockerfile: './Dockerfile'
+      target: 'build'
+    environment:
+      - 'CI=${CI:-false}'
+    volumes:
+      - "../test/example-data:/opt/solr-geonames-data:ro"
+      - "../:/opt/solr-geonames-testing"
+    entrypoint: >-
+      /bin/bash -c "
+        cd /opt/solr-geonames-testing &&
+        NODE_ENV=dev npm install &&
+        npm run test:compile &&
+        node build/src/index.js --core solr-geonames --dir /opt/solr-geonames-data --solrUrl http://solr:8983/solr &&
+        node_modules/.bin/mocha --config test/.mocharc.js --exit build/test/unit/**/*.test.js build/test/integration/**/*.test.js"
+    networks:
+      main_solr_geonames:
+        aliases:
+          - solr-geonames
+    depends_on:
+      solr:
+        condition: service_healthy
+      nginx:
+        condition: service_started

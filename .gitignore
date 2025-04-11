@@ -1,1 +1,20 @@
-target/
+# General ignores
+.DS_Store
+Thumbs.db
+.idea/
+*.iml
+
+# node
+node_modules/
+
+# app
+api/
+*.log
+
+build/
+
+core/*.js
+test/js/
+
+support/junit/
+support/.tmp-data/
