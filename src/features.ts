@@ -114,7 +114,7 @@ export async function parseFile(
   path: string,
   lineCallback: (line: string) => Promise<object>,
   batchCallback: (lines: object[]) => Promise<void>,
-  batchMax: number = 100,
+  batchMax: number = 1000,
 ) {
   console.log(`Reading file ${path}`);
 
