@@ -159,13 +159,52 @@ async function buildSolrDocs(
   // const continents = continentsEnglish;
   const featureClasses = featureClassesEnglish;
 
+  // index country names from countriesMap
+  const countryDocs: Doc[] = [];
+
   const countriesMap = new Map<string, Country>();
   for (const country of raw.countries) {
     const id = country.iso;
     if (!countriesMap.has(id)) {
       countriesMap.set(id, country);
     }
+
+    const display = `${country.country} (country)`;
+    countryDocs.push({
+      // original
+      geonameid: parseInt(country.geonameId),
+      utf8_name: country.country,
+      basic_name: display,
+      latitude: null,
+      longitude: null,
+      feature_class: "A",
+      feature_code: "COUNTRY",
+      country_code: country.iso,
+      population: null,
+      elevation: null,
+      gtopo30: null,
+      timezone: null,
+      date_modified: null,
+
+      // new
+      alternatenames: country.country,
+      cc2: null,
+      admin1_code: null,
+      admin2_code: null,
+      admin3_code: null,
+      admin4_code: null,
+
+      // additional
+      location_name: country.country,
+      title: display,
+      feature_class_name: "Country",
+      feature_code_name: "Country",
+      country_name: country.country,
+      subdivision_name: null,
+    });
   }
+
+  await batchCompleteCallback(countryDocs);
 
   const featureClassCodesMap = new Map<string, Map<string, FeatureClassCode>>();
   for (const item of raw.featureClassCodes) {

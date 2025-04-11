@@ -46,6 +46,6 @@ describe("Features", () => {
 
       },
     ];
-    expect(expected[0]).to.eql(entries[0]);
+    expect(expected[0]).to.eql(entries[252]);
   });
 });

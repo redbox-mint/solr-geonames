@@ -7,8 +7,7 @@ describe("Solr query", function () {
   const cases = [
     {
       args: (function () {
-        const params = new URLSearchParams("");
-        return params;
+        return new URLSearchParams("");
       })(),
       expected: {
         status: 200, start: 0, numFound: 0, docs: [],
@@ -125,7 +124,6 @@ describe("Solr query", function () {
     },
     {
       // test with subdivision name
-      // TODO: 	Askew Hill	Askew Hill	Askews Hill			T	MT	NZ		F4	053			0		286	Pacific/Auckland
       args: (function () {
         const params = new URLSearchParams("");
         params.append("q", "*skew*");
@@ -165,6 +163,38 @@ describe("Solr query", function () {
             feature_code_name: ["mountain"],
             country_name: ["New Zealand"],
             subdivision_name: ["Marlborough"],
+          },
+        ],
+      },
+    },
+    {
+      // test with countries only
+      args: (function () {
+        const params = new URLSearchParams("");
+        params.append("q", "Australia");
+        params.append("fq", "feature_class:A AND feature_code:COUNTRY");
+        return params;
+      })(),
+      expected: {
+        status: 200, start: 0, numFound: 1, docs: [
+          {
+            // original
+            geonameid: "2077456",
+            utf8_name: ["Australia"],
+            basic_name: ["Australia (country)"],
+            feature_class: ["A"],
+            feature_code: ["COUNTRY"],
+            country_code: ["AU"],
+
+            // new
+            alternatenames: ["Australia"],
+
+            // additional
+            location_name: ["Australia"],
+            title: ["Australia (country)"],
+            feature_class_name: ["Country"],
+            feature_code_name: ["Country"],
+            country_name: ["Australia"],
           },
         ],
       },
