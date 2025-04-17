@@ -35,12 +35,12 @@ export async function defineSchema(solrUrl: string, corename: string) {
       { name: "gtopo30", type: "plongs", stored: true, indexed: true },
       { name: "timezone", type: "strings", stored: true, indexed: true },
       { name: "date_modified", type: "pdates", stored: true, indexed: true },
-      { name: "location_name", type: "text_general", stored: true, indexed: true }, // new v3
       { name: "title", type: "text_general", stored: true, indexed: true }, // new v3
       { name: "feature_class_name", type: "strings", stored: true, indexed: true }, // new v3
       { name: "feature_code_name", type: "strings", stored: true, indexed: true }, // new v3
       { name: "country_name", type: "text_general", stored: true, indexed: true }, // new v3
       { name: "subdivision_name", type: "text_general", stored: true, indexed: true }, // new v3
+      { name: "display_title", type: "text_general", stored: true, indexed: true }, // new v3
     ],
   };
   try {
@@ -174,7 +174,7 @@ async function buildSolrDocs(
       // original
       geonameid: parseInt(country.geonameId),
       utf8_name: country.country,
-      basic_name: display,
+      basic_name: country.country,
       latitude: null,
       longitude: null,
       feature_class: "A",
@@ -195,12 +195,12 @@ async function buildSolrDocs(
       admin4_code: null,
 
       // additional
-      location_name: country.country,
-      title: display,
+      title: country.country,
       feature_class_name: "Country",
       feature_code_name: "Country",
       country_name: country.country,
       subdivision_name: null,
+      display_title: display,
     });
   }
 
@@ -250,7 +250,7 @@ async function buildSolrDocs(
         // original
         geonameid: location.geonameid,
         utf8_name: location.utf8_name,
-        basic_name: display,
+        basic_name: location.basic_name,
         latitude: location.latitude,
         longitude: location.longitude,
         feature_class: location.feature_class,
@@ -271,12 +271,12 @@ async function buildSolrDocs(
         admin4_code: location.admin4_code,
 
         // additional
-        location_name: location.basic_name,
-        title: display,
+        title: location.basic_name,
         feature_class_name: feature_class_name,
         feature_code_name: feature_code_name,
         country_name: country_name,
         subdivision_name: subdivision_name,
+        display_title: display,
       });
     }
     await batchCompleteCallback(docs);

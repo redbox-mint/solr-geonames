@@ -53,6 +53,7 @@ async function main() {
     console.log("Process complete.");
   } catch (error) {
     console.error("An error occurred:", error);
+    throw error;
   }
 }
 

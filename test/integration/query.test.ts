@@ -1,10 +1,11 @@
 import axios from "axios";
+import { SolrResponseDoc } from "../../src/model";
 
 let expect: Chai.ExpectStatic;
 import("chai").then(mod => expect = mod.expect);
 
 describe("Solr query", function () {
-  const cases = [
+  const cases: { args: URLSearchParams, expected: { status: number, start: number, numFound: number, docs: SolrResponseDoc[] } }[] = [
     {
       args: (function () {
         return new URLSearchParams("");
@@ -25,7 +26,7 @@ describe("Solr query", function () {
           {
             geonameid: "2078064",
             admin1_code: ["00"],
-            basic_name: ["Kahui Number 2, New Zealand (hill)"],
+            basic_name: ["Kahui Number 2"],
             country_code: ["NZ"],
             country_name: ["New Zealand"],
             date_modified: ["1993-12-30T00:00:00Z"],
@@ -36,11 +37,11 @@ describe("Solr query", function () {
             gtopo30: [-9999],
             latitude: [-39.31667],
             longitude: [123.93333],
-            location_name: ["Kahui Number 2"],
             population: [0],
             timezone: ["Pacific/Auckland"],
-            title: ["Kahui Number 2, New Zealand (hill)"],
+            title: ["Kahui Number 2"],
             utf8_name: ["Kahui Number 2"],
+            display_title: ["Kahui Number 2, New Zealand (hill)"],
           },
         ],
       },
@@ -57,7 +58,7 @@ describe("Solr query", function () {
           {
             geonameid: "2078064",
             admin1_code: ["00"],
-            basic_name: ["Kahui Number 2, New Zealand (hill)"],
+            basic_name: ["Kahui Number 2"],
             country_code: ["NZ"],
             country_name: ["New Zealand"],
             date_modified: ["1993-12-30T00:00:00Z"],
@@ -68,11 +69,11 @@ describe("Solr query", function () {
             gtopo30: [-9999],
             latitude: [-39.31667],
             longitude: [123.93333],
-            location_name: ["Kahui Number 2"],
             population: [0],
             timezone: ["Pacific/Auckland"],
-            title: ["Kahui Number 2, New Zealand (hill)"],
+            title: ["Kahui Number 2"],
             utf8_name: ["Kahui Number 2"],
+            display_title: ["Kahui Number 2, New Zealand (hill)"],
           },
         ],
       },
@@ -93,7 +94,7 @@ describe("Solr query", function () {
             // original
             geonameid: "2178889",
             utf8_name: ["Manukau County"],
-            basic_name: ["Manukau County, New Zealand (administrative division)"],
+            basic_name: ["Manukau County"],
             latitude: [-37],
             longitude: [175],
             feature_class: ["A"],
@@ -112,12 +113,12 @@ describe("Solr query", function () {
             // admin4_code: [""],
 
             // additional
-            location_name: ["Manukau County"],
-            title: ["Manukau County, New Zealand (administrative division)"],
+            title: ["Manukau County"],
             feature_class_name: ["Region"],
             feature_code_name: ["administrative division"],
             country_name: ["New Zealand"],
             // subdivision_name: [""],
+            display_title: ["Manukau County, New Zealand (administrative division)"],
           },
         ],
       },
@@ -138,7 +139,7 @@ describe("Solr query", function () {
             // original
             geonameid: "2178895",
             utf8_name: ["Askew Hill"],
-            basic_name: ["Askew Hill, Marlborough, New Zealand (mountain)"],
+            basic_name: ["Askew Hill"],
             latitude: [-41.03333],
             longitude: [173.7],
             feature_class: ["T"],
@@ -153,16 +154,14 @@ describe("Solr query", function () {
             alternatenames: ["Askews Hill"],
             admin1_code: ["F4"],
             admin2_code: ["053"],
-            // admin3_code: [""],
-            // admin4_code: [""],
 
             // additional
-            location_name: ["Askew Hill"],
-            title: ["Askew Hill, Marlborough, New Zealand (mountain)"],
+            title: ["Askew Hill"],
             feature_class_name: ["Natural landmark"],
             feature_code_name: ["mountain"],
             country_name: ["New Zealand"],
             subdivision_name: ["Marlborough"],
+            display_title: ["Askew Hill, Marlborough, New Zealand (mountain)"],
           },
         ],
       },
@@ -181,7 +180,7 @@ describe("Solr query", function () {
             // original
             geonameid: "2077456",
             utf8_name: ["Australia"],
-            basic_name: ["Australia (country)"],
+            basic_name: ["Australia"],
             feature_class: ["A"],
             feature_code: ["COUNTRY"],
             country_code: ["AU"],
@@ -190,11 +189,11 @@ describe("Solr query", function () {
             alternatenames: ["Australia"],
 
             // additional
-            location_name: ["Australia"],
-            title: ["Australia (country)"],
+            title: ["Australia"],
             feature_class_name: ["Country"],
             feature_code_name: ["Country"],
             country_name: ["Australia"],
+            display_title: ["Australia (country)"],
           },
         ],
       },

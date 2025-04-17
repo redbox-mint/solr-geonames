@@ -23,7 +23,7 @@ describe("Features", () => {
         admin3_code: "",
         admin4_code: "",
         alternatenames: "",
-        basic_name: "Kahui Number 2, New Zealand (hill)",
+        basic_name: "Kahui Number 2",
         cc2: "",
         country_code: "NZ",
         country_name: "New Zealand",
@@ -36,14 +36,13 @@ describe("Features", () => {
         gtopo30: -9999,
         geonameid: 2078064,
         latitude: -39.31667,
-        location_name: "Kahui Number 2",
         longitude: 123.93333,
         population: 0,
         subdivision_name: "",
         timezone: "Pacific/Auckland",
-        title: "Kahui Number 2, New Zealand (hill)",
+        title: "Kahui Number 2",
         utf8_name: "Kahui Number 2",
-
+        display_title: "Kahui Number 2, New Zealand (hill)",
       },
     ];
     expect(expected[0]).to.eql(entries[252]);

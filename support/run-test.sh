@@ -7,7 +7,7 @@ set -o xtrace
 
 docker compose \
   -f ./support/docker-compose.dev.yml \
-  -f support/docker-compose.test.yml up \
+  -f ./support/docker-compose.test.yml up \
   --menu=false \
   --remove-orphans \
   --abort-on-container-exit \

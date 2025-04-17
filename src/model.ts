@@ -85,12 +85,12 @@ export interface Entry {
 }
 
 export interface Doc extends Entry {
-  location_name: string
   title: string
   feature_class_name: string
   feature_code_name: string
   country_name: string
   subdivision_name: string
+  display_title: string
 }
 
 /**
@@ -163,4 +163,33 @@ export interface Admin1Codes {
   geonameId: string
   country_code: string
   admin1_code: string
+}
+
+export interface SolrResponseDoc {
+  geonameid: string
+  utf8_name: string[]
+  basic_name: string[]
+  alternatenames?: string[]
+  latitude?: number[]
+  longitude?: number[]
+  feature_class: string[]
+  feature_code: string[]
+  country_code: string[]
+  cc2?: string[]
+  admin1_code?: string[]
+  admin2_code?: string[]
+  admin3_code?: string[]
+  admin4_code?: string[]
+  population?: number[]
+  elevation?: number[]
+  gtopo30?: number[]
+  timezone?: string[]
+  date_modified?: string[]
+
+  title?: string[]
+  feature_class_name?: string[]
+  feature_code_name?: string[]
+  country_name?: string[]
+  subdivision_name?: string[]
+  display_title?: string[]
 }
