@@ -37,7 +37,7 @@
     "@typescript-eslint/eslint-plugin": "8.31.0",
     "@typescript-eslint/parser": "8.31.0",
     "chai": "5.2.0",
-    "eslint": "9.24.0",
+    "eslint": "9.25.1",
     "mocha": "11.1.0",
     "mocha-junit-reporter": "2.2.1",
     "typescript": "5.8.3",
