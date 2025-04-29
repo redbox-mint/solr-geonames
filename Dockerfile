@@ -1,4 +1,4 @@
-FROM node:20.19.1 AS build
+FROM node:23.11.0 AS build
 
 ENV NODE_ENV=production
 ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
