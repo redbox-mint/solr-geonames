@@ -31,7 +31,7 @@ services:
 
   nginx:
     container_name: "nginx"
-    image: "nginx:stable"
+    image: "nginx:latest"
     expose:
       - "8080"
     ports:
