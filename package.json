@@ -34,7 +34,7 @@
     "@types/lodash": "4.17.20",
     "@types/mocha": "10.0.10",
     "@types/node": "24.9.1",
-    "@typescript-eslint/eslint-plugin": "8.32.1",
+    "@typescript-eslint/eslint-plugin": "8.71.2",
     "@typescript-eslint/parser": "8.32.1",
     "chai": "5.2.0",
     "eslint": "9.27.0",
